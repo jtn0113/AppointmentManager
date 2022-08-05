@@ -1,5 +1,6 @@
 package controller;
 
+import helper.ShowScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
@@ -7,7 +8,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 
+import java.io.IOException;
+
 public class appointmentsScreenController {
+
+    ShowScene scene = new ShowScene();
 
     @FXML
     private RadioButton AllAppointmentsRB;
@@ -55,8 +60,8 @@ public class appointmentsScreenController {
     private TableColumn<?, ?> appointmentUserIdCol;
 
     @FXML
-    void onActionAddAppointment(ActionEvent event) {
-
+    void onActionAddAppointment(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/addAppointmentScreen.fxml");
     }
 
     @FXML
@@ -66,7 +71,7 @@ public class appointmentsScreenController {
 
     @FXML
     void onActionExit(ActionEvent event) {
-
+        System.exit(0);
     }
 
     @FXML
@@ -75,8 +80,8 @@ public class appointmentsScreenController {
     }
 
     @FXML
-    void onActionShowCustomers(ActionEvent event) {
-
+    void onActionShowCustomers(ActionEvent event) throws IOException{
+        scene.showScene(event, "/view/customersScreen.fxml");
     }
 
     @FXML
@@ -90,8 +95,8 @@ public class appointmentsScreenController {
     }
 
     @FXML
-    void onActionUpdateAppointment(ActionEvent event) {
-
+    void onActionUpdateAppointment(ActionEvent event)throws IOException {
+        scene.showScene(event, "/view/updateAppointmentScreen.fxml");
     }
 
 }

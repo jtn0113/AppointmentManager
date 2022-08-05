@@ -1,11 +1,16 @@
 package controller;
 
+import helper.ShowScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class addCustomerScreenController {
+
+    ShowScene scene = new ShowScene();
 
     @FXML
     private TextField addCustomerAddressTxt;
@@ -34,8 +39,8 @@ public class addCustomerScreenController {
     }
 
     @FXML
-    void onActionToCustomersScreen(ActionEvent event) {
-
+    void onActionToCustomersScreen(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/customersScreen.fxml");
     }
 
 }

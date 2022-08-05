@@ -1,11 +1,16 @@
 package controller;
 
+import helper.ShowScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.io.IOException;
+
 public class customersScreenController {
+
+    ShowScene scene = new ShowScene();
 
     @FXML
     private TableView<?> AppointmentTableView;
@@ -29,8 +34,8 @@ public class customersScreenController {
     private TableColumn<?, ?> customerPostalTableCol;
 
     @FXML
-    void onActionAddCustomer(ActionEvent event) {
-
+    void onActionAddCustomer(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/addCustomerScreen.fxml");
     }
 
     @FXML
@@ -40,17 +45,17 @@ public class customersScreenController {
 
     @FXML
     void onActionExit(ActionEvent event) {
-
+        System.exit(0);
     }
 
     @FXML
-    void onActionShowAppointments(ActionEvent event) {
-
+    void onActionShowAppointments(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/appointmentsScreen.fxml");
     }
 
     @FXML
-    void onActionUpdateCustomer(ActionEvent event) {
-
+    void onActionUpdateCustomer(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/updateCustomerScreen.fxml");
     }
 
 }
