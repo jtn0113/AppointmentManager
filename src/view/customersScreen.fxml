@@ -45,7 +45,7 @@
                                         <Insets bottom="10.0" left="25.0" top="10.0" />
                                     </padding>
                                 </HBox>
-                                <TableView fx:id="AppointmentTableView" prefHeight="744.0" prefWidth="1272.0">
+                                <TableView fx:id="CustomersTableView" prefHeight="744.0" prefWidth="1272.0">
                                     <columns>
                                         <TableColumn fx:id="customerIdTableCol" prefWidth="322.0" text="Customer_ID" />
                                         <TableColumn fx:id="customerNameTableCol" prefWidth="223.0" text="Name" />
