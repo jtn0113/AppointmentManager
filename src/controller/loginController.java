@@ -1,5 +1,8 @@
 package controller;
 
+import DAO.userDAO;
+import helper.Alerts;
+import helper.FileLogger;
 import helper.ShowScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,8 +11,12 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * Controller for login screen
@@ -19,28 +26,16 @@ public class loginController implements Initializable {
     ShowScene scene = new ShowScene();
     Locale locale = Locale.getDefault();
     String lang = locale.getDisplayLanguage();
-    String country = locale.getDisplayCountry();
-
-    @FXML
-    private ToggleGroup languageTG;
+    ZoneId timeZone = ZoneId.systemDefault();
 
     @FXML
     private Button loginButton;
-
-    @FXML
-    private RadioButton loginEnglishRBtn;
-
-    @FXML
-    private RadioButton loginFrenchRBtn;
 
     @FXML
     private Label loginPassword;
 
     @FXML
     private TextField loginPasswordTxt;
-
-    @FXML
-    private Label loginSelectLanguage;
 
     @FXML
     private Label loginTimezone;
@@ -51,54 +46,46 @@ public class loginController implements Initializable {
     @FXML
     private TextField loginUsernameTxt;
 
+    /**
+     * Verifies username and password are correct, logs in
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
-    void onActionLoginEnglish(ActionEvent event) {
-//        loginSelectLanguage.setText("Select Language");
-//        loginEnglishRBtn.setText("English");
-//        loginFrenchRBtn.setText("French");
-//        loginUsername.setText("Username");
-//        loginPassword.setText("Password");
-//        loginTimezone.setText("Timezone:");
-//        loginButton.setText("Login");
-//        System.out.println(locale);
-//        System.out.println(lang);
-//        System.out.println(country);
-//        System.out.println();
+    void onActionLogin(ActionEvent event) throws IOException, SQLException {
+        String userName = loginUsernameTxt.getText();
+        String password = loginPasswordTxt.getText();
+        if(userDAO.loginCorrect(userName, password)) {
+            FileLogger.logLogin(userName, true);
+            scene.showScene(event, "/view/appointmentsScreen.fxml");
+        } else {
+            FileLogger.logLogin(userName, false);
+            if(lang == "français") {
+                Alerts.errorAlert("Le nom d'utilisateur ou le mot de passe sont incorrects");
+            } else {
+                Alerts.errorAlert("Username or Password are incorrect");
+            }
+
+        }
     }
 
-    @FXML
-    void onActionLoginFrench(ActionEvent event) {
-//        loginSelectLanguage.setText("Choisir la langue");
-//        loginEnglishRBtn.setText("Anglais");
-//        loginFrenchRBtn.setText("Français");
-//        loginUsername.setText("Nom d'utilisateur");
-//        loginPassword.setText("Mot de passe");
-//        loginTimezone.setText("Fuseau horaire:");
-//        loginButton.setText("Connexion");
-    }
-
-    @FXML
-    void onActionLogin(ActionEvent event) throws IOException{
-        scene.showScene(event, "/view/appointmentsScreen.fxml");
-    }
-
+    /**
+     * Sets test based on system language
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if(lang == "français") {
-            loginSelectLanguage.setText("Choisir la langue");
-            loginEnglishRBtn.setText("Anglais");
-            loginFrenchRBtn.setText("Français");
             loginUsername.setText("Nom d'utilisateur");
             loginPassword.setText("Mot de passe");
-            loginTimezone.setText("Fuseau horaire:");
+            loginTimezone.setText("" + timeZone);
             loginButton.setText("Connexion");
         } else {
-            loginSelectLanguage.setText("Select Language");
-            loginEnglishRBtn.setText("English");
-            loginFrenchRBtn.setText("French");
             loginUsername.setText("Username");
             loginPassword.setText("Password");
-            loginTimezone.setText("Timezone:");
+            loginTimezone.setText("" + timeZone);
             loginButton.setText("Login");
         }
     }
