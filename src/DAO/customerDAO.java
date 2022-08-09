@@ -10,6 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class customerDAO {
+    /**
+     * Returns observable list of all customers
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Customers> getAllCustomers() throws SQLException {
         String query = "SELECT * FROM customers";
 

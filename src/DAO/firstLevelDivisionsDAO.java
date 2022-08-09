@@ -10,6 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class firstLevelDivisionsDAO {
+    /**
+     * Returns observable list of all first level divisions
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Divisions> getAllDivisions() throws SQLException {
         String query = "SELECT * FROM first_level_divisions";
 
@@ -29,25 +34,11 @@ public class firstLevelDivisionsDAO {
         return allDivisionsObservableList;
     }
 
-//    public static ObservableList<Divisions> getUsDivisions() throws SQLException {
-//        String query = "SELECT Division FROM first_level_divisions WHERE Country_ID = 1";
-//
-//        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
-//        ResultSet rs = ps.executeQuery();
-//
-//        ObservableList<Divisions> usDivisionsObservableList = FXCollections.observableArrayList();
-//
-//        while (rs.next()) {
-//            int division_id = rs.getInt("Division_ID");
-//            String name = rs.getString("Division");
-//            int country_id = rs.getInt("Country_ID");
-//
-//            Divisions division = new Divisions(division_id, name, country_id);
-//            usDivisionsObservableList.add(division);
-//        }
-//        return usDivisionsObservableList;
-//    }
-
+    /**
+     * Returns observable list of all divisions from country US
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<String> getUsDivisions() throws SQLException {
         String query = "SELECT Division FROM first_level_divisions WHERE Country_ID = 1";
 
@@ -63,6 +54,11 @@ public class firstLevelDivisionsDAO {
         return usDivisionsOL;
     }
 
+    /**
+     * Returns observable list of all divisions from country UK
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<String> getUkDivisions() throws SQLException {
         String query = "SELECT Division FROM first_level_divisions WHERE Country_ID = 2";
 
@@ -78,6 +74,11 @@ public class firstLevelDivisionsDAO {
         return ukDivisionsOL;
     }
 
+    /**
+     * Returns observable list of all divisions from country Canada
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<String> getCanadaDivisions() throws SQLException {
         String query = "SELECT Division FROM first_level_divisions WHERE Country_ID = 3";
 

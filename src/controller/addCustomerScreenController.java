@@ -19,6 +19,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Add Customer screen
+ */
 public class addCustomerScreenController implements Initializable {
 
     ShowScene scene = new ShowScene();
@@ -44,6 +47,12 @@ public class addCustomerScreenController implements Initializable {
     @FXML
     private TextField addCustomerPostalTxt;
 
+    /**
+     * Saves customer when save button is clicked
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void onActionSaveCustomer(ActionEvent event) throws SQLException, IOException {
         String name = addCustomerNameTxt.getText();
@@ -70,11 +79,21 @@ public class addCustomerScreenController implements Initializable {
 
     }
 
+    /**
+     * Returns to Customers screen when cancel is clicked
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionToCustomersScreen(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/customersScreen.fxml");
     }
 
+    /**
+     * Initialize method
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
