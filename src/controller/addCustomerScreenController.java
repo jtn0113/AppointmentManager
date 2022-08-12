@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.firstLevelDivisionsDAO;
+import helper.Alerts;
 import helper.CountryConversions;
 import helper.JDBC;
 import helper.ShowScene;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 /**
@@ -55,27 +57,39 @@ public class addCustomerScreenController implements Initializable {
      */
     @FXML
     void onActionSaveCustomer(ActionEvent event) throws SQLException, IOException {
-        String name = addCustomerNameTxt.getText();
-        String address = addCustomerAddressTxt.getText();
-        String postalCode = addCustomerPostalTxt.getText();
-        String phone = addCustomerPhoneTxt.getText();
-        int divisionId = CountryConversions.divisionNameToId(addCustomerDivisionCombo.getSelectionModel().getSelectedItem());
+        try {
+            String name = addCustomerNameTxt.getText();
+            String address = addCustomerAddressTxt.getText();
+            String postalCode = addCustomerPostalTxt.getText();
+            String phone = addCustomerPhoneTxt.getText();
+            int divisionId = CountryConversions.divisionNameToId(addCustomerDivisionCombo.getSelectionModel().getSelectedItem());
 
-        String query = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID)" + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty()) {
+                Alerts.errorAlert("Enter Valid Data");
+            } else {
+                String query = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID)" + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
-        ps.setString(1, name);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phone);
-        ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-        ps.setString(6, "script");
-        ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
-        ps.setString(8, "script");
-        ps.setInt(9, divisionId);
-        ps.execute();
+                PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+                ps.setString(1, name);
+                ps.setString(2, address);
+                ps.setString(3, postalCode);
+                ps.setString(4, phone);
+                ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+                ps.setString(6, "script");
+                ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+                ps.setString(8, "script");
+                ps.setInt(9, divisionId);
+                ps.execute();
 
-        scene.showScene(event, "/view/customersScreen.fxml");
+                scene.showScene(event, "/view/customersScreen.fxml");
+            }
+        } catch (DateTimeParseException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        } catch (NullPointerException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        } catch (SQLException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        }
 
     }
 

@@ -1,6 +1,8 @@
 package DAO;
 
 import helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,5 +20,20 @@ public class userDAO {
         } else {
             return false;
         }
+    }
+
+    public static ObservableList<Integer> getAllUserId() throws SQLException {
+        String query = "SELECT User_ID FROM users";
+
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        ObservableList<Integer> allUserId = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            int userID = rs.getInt("User_ID");
+            allUserId.add(userID);
+        }
+        return allUserId;
     }
 }

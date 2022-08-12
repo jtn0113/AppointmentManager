@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.appointmentsDAO;
 import DAO.customerDAO;
 import helper.Alerts;
 import helper.JDBC;
@@ -11,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -71,14 +73,21 @@ public class customersScreenController implements Initializable {
      */
     @FXML
     void onActionDeleteCustomer(ActionEvent event) throws SQLException, IOException{
-        int customerId = CustomersTableView.getSelectionModel().getSelectedItem().getCustomerId();
-        String customerName = CustomersTableView.getSelectionModel().getSelectedItem().getCustomerName();
-
-        String query = "DELETE FROM customers WHERE Customer_ID = " + customerId;
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
-        ps.execute();
-        Alerts.informationAlert(customerName + " deleted");
-        scene.showScene(event, "/view/customersScreen.fxml");
+        try {
+            int customerId = CustomersTableView.getSelectionModel().getSelectedItem().getCustomerId();
+            String customerName = CustomersTableView.getSelectionModel().getSelectedItem().getCustomerName();
+            if (appointmentsDAO.customerHasAppointments(customerId)) {
+                Alerts.errorAlert("Customers appointments must be deleted before deleting customer");
+            } else {
+                String query = "DELETE FROM customers WHERE Customer_ID = " + customerId;
+                PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+                ps.execute();
+                Alerts.informationAlert(customerName + " deleted");
+                scene.showScene(event, "/view/customersScreen.fxml");
+            }
+        } catch (NullPointerException e) {
+            Alerts.errorAlert("Select a Customer");
+        }
     }
 
     /**
@@ -108,17 +117,21 @@ public class customersScreenController implements Initializable {
      */
     @FXML
     void onActionUpdateCustomer(ActionEvent event) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/updateCustomerScreen.fxml"));
-        loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/updateCustomerScreen.fxml"));
+            loader.load();
 
-        updateCustomerScreenController UCController = loader.getController();
-        UCController.sendCustomer(CustomersTableView.getSelectionModel().getSelectedItem(), CustomersTableView.getSelectionModel().getSelectedIndex());
+            updateCustomerScreenController UCController = loader.getController();
+            UCController.sendCustomer(CustomersTableView.getSelectionModel().getSelectedItem());
 
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch(NullPointerException e) {
+            Alerts.errorAlert("Select a Customer");
+        }
     }
 
     /**

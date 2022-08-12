@@ -1,6 +1,7 @@
 package controller;
 
 import DAO.firstLevelDivisionsDAO;
+import helper.Alerts;
 import helper.CountryConversions;
 import helper.JDBC;
 import helper.ShowScene;
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 /**
@@ -26,7 +28,6 @@ import java.util.ResourceBundle;
 public class updateCustomerScreenController implements Initializable {
 
     ShowScene scene = new ShowScene();
-    private int customerIndex;
 
     @FXML
     private TextField updateCustomerAddressTxt;
@@ -67,45 +68,56 @@ public class updateCustomerScreenController implements Initializable {
      */
     @FXML
     void onActionUpdateCustomer(ActionEvent event) throws SQLException, IOException{
-        String name = updateCustomerNameTxt.getText();
-        String address = updateCustomerAddressTxt.getText();
-        String postalCode = updateCustomerPostalTxt.getText();
-        String phone = updateCustomerPhoneTxt.getText();
-        int divisionId = CountryConversions.divisionNameToId(updateCustomerDivisionCombo.getSelectionModel().getSelectedItem());
-        String customerId = updateCustomerIdText.getText();
+        try {
+            String name = updateCustomerNameTxt.getText();
+            String address = updateCustomerAddressTxt.getText();
+            String postalCode = updateCustomerPostalTxt.getText();
+            String phone = updateCustomerPhoneTxt.getText();
+            int divisionId = CountryConversions.divisionNameToId(updateCustomerDivisionCombo.getSelectionModel().getSelectedItem());
+            String customerId = updateCustomerIdText.getText();
 
-        String query = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = " + customerId;
+            if(name.isEmpty() || address.isEmpty() || postalCode.isEmpty() || phone.isEmpty()) {
+                Alerts.errorAlert("Enter Valid Data");
+            } else {
+                String query = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Create_Date = ?, Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = " + customerId;
 
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
-        ps.setString(1, name);
-        ps.setString(2, address);
-        ps.setString(3, postalCode);
-        ps.setString(4, phone);
-        ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-        ps.setString(6, "script");
-        ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
-        ps.setString(8, "script");
-        ps.setInt(9, divisionId);
-        ps.execute();
+                PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+                ps.setString(1, name);
+                ps.setString(2, address);
+                ps.setString(3, postalCode);
+                ps.setString(4, phone);
+                ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+                ps.setString(6, "script");
+                ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+                ps.setString(8, "script");
+                ps.setInt(9, divisionId);
+                ps.execute();
 
-        scene.showScene(event, "/view/customersScreen.fxml");
+                scene.showScene(event, "/view/customersScreen.fxml");
+            }
+        } catch (DateTimeParseException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        } catch (NullPointerException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        } catch (SQLException e) {
+            Alerts.errorAlert("Enter Valid Data");
+        }
     }
 
     /**
      * Receives data from Customers screen and populates text fields
      * @param customer
-     * @param selectedIndex
+     * @param
      * @throws SQLException
      */
-    public void sendCustomer(Customers customer, int selectedIndex) throws SQLException {
+    public void sendCustomer(Customers customer) throws SQLException {
         ObservableList<String> usOL = firstLevelDivisionsDAO.getUsDivisions();
         ObservableList<String> ukOL = firstLevelDivisionsDAO.getUkDivisions();
         ObservableList<String> canadaOL = firstLevelDivisionsDAO.getCanadaDivisions();
         int countryID = CountryConversions.divisionIdToCountryId(customer.getDivisionId());
         String divisionName = CountryConversions.divisionIdToName(customer.getDivisionId());
 
-        customerIndex = selectedIndex;
-        updateCustomerIdText.setText(String.valueOf((customer).getCustomerId()));
+        updateCustomerIdText.setText(String.valueOf(customer.getCustomerId()));
         updateCustomerNameTxt.setText(customer.getCustomerName());
         updateCustomerAddressTxt.setText(customer.getCustomerAddress());
         updateCustomerPostalTxt.setText(customer.getCustomerPostalCode());

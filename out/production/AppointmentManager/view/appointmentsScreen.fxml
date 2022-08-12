@@ -84,6 +84,13 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#onActionShowAppointmentsReport" text="Appointments By Type/Month" />
+                  <Button mnemonicParsing="false" onAction="#onActionShowContactSchedule" text="Contact Schedule" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onActionShowCustomReport" text="Custom Report">
+                     <HBox.margin>
+                        <Insets right="1200.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#onActionShowCustomers" text="Customers">
                      <HBox.margin>
                         <Insets right="100.0" />
