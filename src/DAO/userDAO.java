@@ -9,6 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class userDAO {
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return boolean
+     * @throws SQLException
+     */
     public static boolean loginCorrect(String username, String password) throws SQLException {
         String query = "SELECT * FROM users WHERE User_Name = " + "'" + username + "'" + "AND Password = " + "'" + password + "'";
 
@@ -22,6 +30,11 @@ public class userDAO {
         }
     }
 
+    /**
+     *
+     * @return all user ID's
+     * @throws SQLException
+     */
     public static ObservableList<Integer> getAllUserId() throws SQLException {
         String query = "SELECT User_ID FROM users";
 

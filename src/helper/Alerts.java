@@ -39,4 +39,5 @@ public class Alerts {
         alert.setContentText(alertMessage);
         alert.show();
     }
+
 }

@@ -5,8 +5,6 @@ import DAO.userDAO;
 import helper.Alerts;
 import helper.FileLogger;
 import helper.ShowScene;
-import helper.TimeConversions;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,13 +16,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Controller for login screen
@@ -64,10 +58,10 @@ public class loginController implements Initializable {
     void onActionLogin(ActionEvent event) throws IOException, SQLException {
         ArrayList<String> appointmentsWithinFifteen = new ArrayList<String>();
         String alertString = "";
-//        String userName = loginUsernameTxt.getText();
-//        String password = loginPasswordTxt.getText();
-//
-//        if(userDAO.loginCorrect(userName, password)) {
+        String userName = loginUsernameTxt.getText();
+        String password = loginPasswordTxt.getText();
+
+        if(userDAO.loginCorrect(userName, password)) {
             for (Appointments appointment : appointmentsDAO.getAllAppointments()) {
                 if (appointment.getAppointmentStart().isAfter(LocalDateTime.now().minusMinutes(15)) && appointment.getAppointmentStart().isBefore(LocalDateTime.now().plusMinutes(15))) {
                     appointmentsWithinFifteen.add("Appointment ID = " + appointment.getAppointmentID() + " Appointment Start: " + appointment.getAppointmentStart());
@@ -81,17 +75,17 @@ public class loginController implements Initializable {
             } else {
                 Alerts.informationAlert("Appointments within 15 minutes: " + "\n" + alertString);
             }
-//            FileLogger.logLogin(userName, true);
+            FileLogger.logLogin(userName, true);
             scene.showScene(event, "/view/appointmentsScreen.fxml");
-//        } else {
-//            FileLogger.logLogin(userName, false);
-//            if(lang == "français") {
-//                Alerts.errorAlert("Le nom d'utilisateur ou le mot de passe sont incorrects");
-//            } else {
-//                Alerts.errorAlert("Username or Password are incorrect");
-//            }
-//
-//        }
+        } else {
+            FileLogger.logLogin(userName, false);
+            if(lang == "français") {
+                Alerts.errorAlert("Le nom d'utilisateur ou le mot de passe sont incorrects");
+            } else {
+                Alerts.errorAlert("Username or Password are incorrect");
+            }
+
+        }
 
     }
 

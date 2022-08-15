@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="958.0" prefWidth="1866.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.customersScheduleScreenController">
+    <children>
+        <VBox prefHeight="958.0" prefWidth="1866.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="416.0" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label alignment="TOP_LEFT" text="Appointment Management System">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="25.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="869.0" prefWidth="1865.0" spacing="17.0">
+                    <children>
+                        <VBox layoutX="259.0" layoutY="10.0" prefHeight="832.0" prefWidth="1859.0" style="-fx-border-color: black; -fx-border-radius: 15px;">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="400.0" spacing="150.0">
+                                    <children>
+                                        <Label text="Customer Schedule">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="CustomerCombo" prefWidth="150.0" promptText="Select Customer" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="25.0" top="10.0" />
+                                    </padding>
+                                </HBox>
+                                <TableView fx:id="CustomerScheduleTableView" prefHeight="744.0" prefWidth="1272.0">
+                                    <columns>
+                                        <TableColumn fx:id="AppointmentIdTableCol" prefWidth="229.0" text="Appointment ID" />
+                                        <TableColumn fx:id="TitleTableCol" prefWidth="242.0" text="Title" />
+                                        <TableColumn fx:id="TypeTableCol" prefWidth="261.0" text="Type" />
+                                        <TableColumn fx:id="DescriptionTableCol" prefWidth="279.0" text="Description" />
+                                        <TableColumn fx:id="StartDateTableCol" prefWidth="294.0" text="Start Date/Time" />
+                                        <TableColumn fx:id="EndDateTableCol" prefWidth="301.0" text="End Date/Time" />
+                                        <TableColumn fx:id="ContactIdTableCol" prefWidth="248.0" text="Contact Name" />
+                                    </columns>
+                                </TableView>
+                                <HBox alignment="BOTTOM_RIGHT" prefHeight="82.0" prefWidth="1010.0" spacing="15.0">
+                                    <padding>
+                                        <Insets bottom="5.0" right="20.0" />
+                                    </padding>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#onActionShowAppointments" text="Appointments">
+                            <HBox.margin>
+                                <Insets right="100.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

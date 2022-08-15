@@ -18,18 +18,18 @@ import model.Appointments;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-import java.util.Formatter;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for update appointment screen
+ */
 public class updateAppointmentScreenController implements Initializable {
 
     ShowScene scene = new ShowScene();
@@ -72,11 +72,22 @@ public class updateAppointmentScreenController implements Initializable {
     @FXML
     private ComboBox<Integer> updateAppointmentUserCombo;
 
+    /**
+     * Returns to appointments screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionToAppointmentsScreen(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/appointmentsScreen.fxml");
     }
 
+    /**
+     * Updates appointment
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void onActionUpdateAppointment(ActionEvent event) throws SQLException, IOException{
         try {
@@ -126,13 +137,12 @@ public class updateAppointmentScreenController implements Initializable {
         } catch (NullPointerException e) {
             Alerts.errorAlert("Enter Valid Databbb");
         }
-//        } catch (SQLException e) {
-//            Alerts.errorAlert("Enter Valid Dataccc");
-//        }
-
-
     }
 
+    /**
+     * Receives appointment data from appointments screen
+     * @param appointment
+     */
     public void sendAppointment(Appointments appointment) {
         String dateTimeStringStart = String.valueOf(appointment.getAppointmentStart());
         String dateTimeStringEnd = String.valueOf(appointment.getAppointmentEnd());
@@ -153,6 +163,11 @@ public class updateAppointmentScreenController implements Initializable {
         updateAppointmentStartDate.setValue(dateSubstring);
     }
 
+    /**
+     * Initialize method
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

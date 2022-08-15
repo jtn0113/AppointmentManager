@@ -86,7 +86,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onActionShowAppointmentsReport" text="Appointments By Type/Month" />
                   <Button mnemonicParsing="false" onAction="#onActionShowContactSchedule" text="Contact Schedule" />
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onActionShowCustomReport" text="Custom Report">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onActionShowCustomReport" text="Customer Schedule">
                      <HBox.margin>
                         <Insets right="1200.0" />
                      </HBox.margin>

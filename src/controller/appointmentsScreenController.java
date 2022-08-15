@@ -25,6 +25,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Appointments Screen
+ */
 public class appointmentsScreenController implements Initializable {
 
     ShowScene scene = new ShowScene();
@@ -75,11 +78,22 @@ public class appointmentsScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> appointmentUserIdCol;
 
+    /**
+     * Adds appointment when button is clicked
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionAddAppointment(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/addAppointmentScreen.fxml");
     }
 
+    /**
+     * Deletes appointment when button is clicked
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void onActionDeleteAppointment(ActionEvent event) throws SQLException, IOException{
         try {
@@ -96,12 +110,19 @@ public class appointmentsScreenController implements Initializable {
         }
     }
 
+    /**
+     * Exits program
+     * @param event
+     */
     @FXML
     void onActionExit(ActionEvent event) {
         System.exit(0);
     }
 
-
+    /**
+     * Displays all appointments
+     * @param event
+     */
     @FXML
     void onActionShowAllAppointments(ActionEvent event) {
         try {
@@ -123,11 +144,20 @@ public class appointmentsScreenController implements Initializable {
         }
     }
 
+    /**
+     * Shows customers screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionShowCustomers(ActionEvent event) throws IOException{
         scene.showScene(event, "/view/customersScreen.fxml");
     }
 
+    /**
+     * Displays appointments for current month
+     * @param event
+     */
     @FXML
     void onActionShowMonthAppointments(ActionEvent event) {
         try {
@@ -149,6 +179,10 @@ public class appointmentsScreenController implements Initializable {
         }
     }
 
+    /**
+     * Displays appointments for current week
+     * @param event
+     */
     @FXML
     void onActionShowWeekAppointments(ActionEvent event) {
         try {
@@ -170,6 +204,12 @@ public class appointmentsScreenController implements Initializable {
         }
     }
 
+    /**
+     * Shows update appointment screen. Sends appointment data
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     void onActionUpdateAppointment(ActionEvent event)throws IOException, SQLException {
         try {
@@ -189,21 +229,41 @@ public class appointmentsScreenController implements Initializable {
         }
     }
 
+    /**
+     * Displays appointments report table
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionShowAppointmentsReport(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/appointmentByTypeMonthScreen.fxml");
     }
 
+    /**
+     * Displays contact schedule table
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void onActionShowContactSchedule(ActionEvent event) {
-
+    void onActionShowContactSchedule(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/contactSchedule.fxml");
     }
 
+    /**
+     * Displays customer schedule table
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void onActionShowCustomReport(ActionEvent event) {
-
+    void onActionShowCustomReport(ActionEvent event) throws IOException {
+        scene.showScene(event, "/view/customerSchedule.fxml");
     }
 
+    /**
+     * Initialize method
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

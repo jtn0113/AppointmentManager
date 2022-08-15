@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Appointments by month/type screen
+ */
 public class appointmentByTypeMonthScreenController implements Initializable {
     ShowScene scene = new ShowScene();
     Stage stage;
@@ -39,11 +42,21 @@ public class appointmentByTypeMonthScreenController implements Initializable {
     @FXML
     private TableView<TypeCount> AppointmentsTypeTableView;
 
+    /**
+     * Returns to appointments screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionShowAppointments(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/appointmentsScreen.fxml");
     }
 
+    /**
+     * Initialize method
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

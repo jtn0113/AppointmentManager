@@ -25,6 +25,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Add Appointment screen
+ */
 public class addAppointmentScreenController implements Initializable {
 
     ShowScene scene = new ShowScene();
@@ -64,8 +67,13 @@ public class addAppointmentScreenController implements Initializable {
     @FXML
     private TextField addAppointmentTypeText;
 
+    /**
+     * Saves appointment when button is clicked
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void onActionSaveAppointment(ActionEvent event) throws SQLException, IOException {
+    void onActionSaveAppointment(ActionEvent event) throws IOException {
         try {
             String title = addAppointmentTitleText.getText();
             String description = addAppointmentDescriptionText.getText();
@@ -118,11 +126,21 @@ public class addAppointmentScreenController implements Initializable {
         }
     }
 
+    /**
+     * Returns to appointment screen
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void onActionToAppointmentsScreen(ActionEvent event) throws IOException {
         scene.showScene(event, "/view/appointmentsScreen.fxml");
     }
 
+    /**
+     * Initialize method
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

@@ -34,6 +34,11 @@ public class contactsDAO {
         return allContactsObservableList;
     }
 
+    /**
+     *
+     * @return allContactNames
+     * @throws SQLException
+     */
     public static ObservableList<String> getAllContactNames() throws SQLException {
         String query = "SELECT Contact_Name FROM contacts";
 

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class customerDAO {
     /**
      * Returns observable list of all customers
-     * @return
+     * @return customersObservableList
      * @throws SQLException
      */
     public static ObservableList<Customers> getAllCustomers() throws SQLException {
@@ -36,6 +36,11 @@ public class customerDAO {
         return customersObservableList;
     }
 
+    /**
+     * Returns all customer id's
+     * @return customersObservableList
+     * @throws SQLException
+     */
     public static ObservableList<Integer> getAllCustomerId() throws SQLException {
         String query = "SELECT Customer_ID FROM customers";
 
@@ -49,6 +54,44 @@ public class customerDAO {
             allCustomerId.add(customerID);
         }
         return allCustomerId;
+    }
+
+    /**
+     * Returns all customer names
+     * @return customersObservableList
+     * @throws SQLException
+     */
+    public static ObservableList<String> getAllCustomerNames() throws SQLException {
+        String query = "SELECT Customer_Name FROM customers";
+
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        ObservableList<String> allCustomerNames = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            String customerName = rs.getString("Customer_Name");
+
+            allCustomerNames.add(customerName);
+        }
+        return allCustomerNames;
+    }
+
+    /**
+     * Returns customer id from customer name
+     * @param customerName
+     * @return customerId
+     * @throws SQLException
+     */
+    public static int customerNameToId(String customerName) throws SQLException {
+        String query = "SELECT Customer_ID FROM customers WHERE Customer_Name = " + "'" + customerName + "'";
+
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        rs.next();
+        int customerId = rs.getInt("Customer_ID");
+        return customerId;
     }
 }
 

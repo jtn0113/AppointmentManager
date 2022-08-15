@@ -104,7 +104,7 @@ public class addCustomerScreenController implements Initializable {
     }
 
     /**
-     * Initialize method
+     * Initialize method. Uses lambda expression to set division combo box. Using a lambda expression here makes code shorter and easier to read.
      * @param url
      * @param resourceBundle
      */
@@ -117,6 +117,7 @@ public class addCustomerScreenController implements Initializable {
             ObservableList<String> canadaOL = firstLevelDivisionsDAO.getCanadaDivisions();
             addCustomerCountryCombo.setItems(countriesOL);
 
+//            Lambda expression
             addCustomerCountryCombo.setOnAction(e -> {
                 if (addCustomerCountryCombo.getValue() == "US") {
                     addCustomerDivisionCombo.setItems(usOL);
